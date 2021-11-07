@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<a href="/tickets/search">Ticket Search</a>
+
+	<!-- 	<img alt="aaa" src="/images/room.jpg" width="100px" height="100px"> -->
+	<!-- 	<img alt="aaa" th:src="@{/images/room2.jpg}" width="100px" height="100px"> -->
+	<h1>Ticket List</h1>
+
+
+		<div>
+			<table class="table table-striped table-responsive-md">
+
+				<thead>
+					<tr>
+						<td>ID</td>
+						<td>Name</td>
+						<td>DepartureTime</td>
+						<td>Arrival Time</td>
+						<td>Seat booked</td>
+						<td>Seat Available</td>
+						<td>UnitFare</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ticket : ${tickets}">
+
+						<td><a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
+							th:utext="${ticket.id}">...</a></td>
+						<td th:text="${ticket.transportName}"></td>
+						<td th:text="${ticket.departingTime}"></td>
+
+						<td><a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
+							th:utext="${ticket.arivalTime}">...</a></td>
+						<td th:utext="${ticket.bookedSeats}">...</td>	
+						<td th:utext="${ticket.availableSeats}">...</td>
+							
+                        <td th:utext="${ticket.unitFare}"></td>
+							
+						<td><a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
+							class="btn btn-primary"><i
+								class="fa fa-cog fa-spin fa-lg fa-fw"></i></a></td>
+						<!-- 				<td><a th:href="@{/students/delete/{id}(id=${student.id})}">Delete</a></td> -->
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+
+</body>
+</html>

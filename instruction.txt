@@ -1,0 +1,1 @@
+create database, run the program, and enter all data field without null values. Then run the program again. 

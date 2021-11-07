@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<h1>Ticket Booking</h1>
+	<a th:href="@{/tickets/search}">Search Page</a>
+	<div>
+		<form action="#" th:action="@{/tickets/book/{id}(id=${ticket.id})}"
+			th:object="${ticket}" method="post">
+
+			Name:<input type="text" th:field="*{transportName}" /><br /> 
+			Source:<input
+				type="text" th:field="*{source}" /><br /> 
+				Destination:<input
+				type="text" th:field="*{unitFare}" /><br /> 
+				Seat01:<input
+				type="text" th:field="*{seat01}" /><br /> 
+				Seat02:<input
+				type="text" th:field="*{seat02}" /><br /> 
+				<input type="submit"
+				class="btn btn-success" value="Book Now" />
+		</form>
+	</div>
+
+</body>
+</html>

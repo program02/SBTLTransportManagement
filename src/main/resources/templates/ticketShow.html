@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<title>Insert title here</title>
+<style>
+.available {
+	width: 60px;
+	height: 40px;
+	border: 2px solid #4f4f4f;
+	border-radius: 5px;
+	outline: none;
+	margin: 2px;
+	background-color: #fafafa;
+}
+
+.selected {
+	width: 60px;
+	height: 40px;
+	border: 2px solid #4f4f4f;
+	border-radius: 5px;
+	outline: none;
+	margin: 2px;
+	background-color: #05821e;
+}
+
+.booked {
+	width: 60px;
+	height: 40px;
+	border: 2px solid #4f4f4f;
+	border-radius: 5px;
+	outline: none;
+	background-color: #999;
+	color: #fff;
+	margin: 2px;
+}
+</style>
+</head>
+<body onload="loadBooked()">
+	<h1>Ticket Select Page</h1>
+	<div class="container">
+		<div>
+			<button id="b01" class="available" name="available"
+				onclick="myFunction(event)">A01</button>
+			<button id="b02" class="available" name="available"
+				onclick="myFunction(event)">A02</button>
+			<button id="b03" class="available" name="available"
+				onclick="myFunction(event)">A03</button>
+			<button id="b04" class="available" name="available"
+				onclick="myFunction(event)">A04</button>
+			<br />
+			<button id="b05" class="available" name="available"
+				onclick="myFunction(event)">A05</button>
+			<button id="b06" class="available" name="available"
+				onclick="myFunction(event)">A06</button>
+			<button id="b07" class="available" name="available"
+				onclick="myFunction(event)">A07</button>
+			<button id="b08" class="available" name="available"
+				onclick="myFunction(event)">A08</button>
+			<br />
+			<button id="b09" class="available" name="available"
+				onclick="myFunction(event)">A09</button>
+			<button id="b10" class="available" name="available"
+				onclick="myFunction(event)">A10</button>
+			<button id="b11" class="available" name="available"
+				onclick="myFunction(event)">A11</button>
+			<button id="b12" class="available" name="available"
+				onclick="myFunction(event)">A12</button>
+			<br />
+			<button id="b13" class="available" name="available"
+				onclick="myFunction(event)">A13</button>
+			<button id="b14" class="available" name="available"
+				onclick="myFunction(event)">A14</button>
+			<button id="b15" class="available" name="available"
+				onclick="myFunction(event)">A15</button>
+			<button id="b16" class="available" name="available"
+				onclick="myFunction(event)">A16</button>
+			<br />
+<!-- 			<div id="myDIV">Summary</div> -->
+			<button  type="button" class="btn btn-primary">
+                 TotalSelectection: <span id="badge1" class="badge badge-light">0</span>
+           </button>
+			<button  type="button" class="btn btn-danger">
+                 SelectedSeats: <span id="badge2" class="badge badge-light">0</span>
+           </button>           
+			<button  type="button" class="btn btn-primary">
+                 BookedSeats: <span id="badge3" class="badge badge-light">0</span>
+           </button>
+ 			<button  type="button" class="btn btn-primary">
+                 AvailableSeats: <span id="badge4" class="badge badge-light">0</span>
+           </button>          
+ 			<button  type="button" class="btn btn-primary">
+                 TotalFare: <span id="badge5" class="badge badge-light">0</span>
+           </button>             
+           
+		</div>
+
+
+
+		<div>
+
+			<form action="#" th:action="@{/tickets/book/{id}(id=${ticket.id})}"
+				th:object="${ticket}" method="post">
+				<div class="row">
+					<div class="form-group col-md-8">
+						<label for="transportName" class="col-form-label col-md-4">transportName</label>
+						<input type="text" th:field="*{transportName}"
+							class="form-control col-md-4" id="transportName"
+							placeholder="transportName"> <span
+							th:if="${#fields.hasErrors('transportName')}"
+							th:errors="*{transportName}" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="totalSeats" class="col-form-label">totalSeats</label>
+						<input type="text" th:field="*{totalSeats}" class="form-control"
+							id="totalSeats" placeholder="totalSeats"> <span
+							th:if="${#fields.hasErrors('totalSeats')}"
+							th:errors="*{totalSeats}" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="bookedSeats" class="col-form-label">bookedSeats</label>
+						<input type="text" th:field="*{bookedSeats}" class="form-control"
+							id="bookedSeats" placeholder="bookedSeats"> <span
+							th:if="${#fields.hasErrors('bookedSeats')}"
+							th:errors="*{bookedSeats}" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="availableSeats" class="col-form-label">availableSeats</label>
+						<input type="text" th:field="*{availableSeats}"
+							class="form-control" id="availableSeats"
+							placeholder="availableSeats"> <span
+							th:if="${#fields.hasErrors('availableSeats')}"
+							th:errors="*{availableSeats}" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="unitFare" class="col-form-label">UnitFare</label> <input
+							type="text" th:field="*{unitFare}" class="form-control"
+							id="unitFare" placeholder="unitFare"> <span
+							th:if="${#fields.hasErrors('unitFare')}" th:errors="*{unitFare}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="totalFare" class="col-form-label">TotalFare</label> <input
+							type="text" th:field="*{totalFare}" class="form-control"
+							id="totalFare" placeholder="totalFare"> <span
+							th:if="${#fields.hasErrors('totalFare')}"
+							th:errors="*{totalFare}" class="text-danger"></span>
+					</div>
+
+
+					<div class="form-group col-md-8">
+						<label for="source" class="col-form-label">source</label> <input
+							type="text" th:field="*{source}" class="form-control" id="source"
+							placeholder="source"> <span
+							th:if="${#fields.hasErrors('source')}" th:errors="*{source}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="destination" class="col-form-label">destination</label>
+						<input type="text" th:field="*{destination}" class="form-control"
+							id="destination" placeholder="destination"> <span
+							th:if="${#fields.hasErrors('destination')}"
+							th:errors="*{destination}" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="arivalTime" class="col-form-label">arivalTime</label>
+						<input type="text" th:field="*{arivalTime}" class="form-control"
+							id="arivalTime" placeholder="arivalTime"> <span
+							th:if="${#fields.hasErrors('arivalTime')}"
+							th:errors="*{arivalTime}" class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="departingTime" class="col-form-label">departingTime</label>
+						<input type="text" th:field="*{departingTime}"
+							class="form-control" id="departingTime"
+							placeholder="departingTime"> <span
+							th:if="${#fields.hasErrors('departingTime')}"
+							th:errors="*{departingTime}" class="text-danger"></span>
+					</div>
+
+
+
+					<div class="form-group col-md-8">
+						<label for="tb01" class="col-form-label">Seat1</label> <input
+							type="text" th:field="*{seat01}" class="form-control tfseat"
+							id="tb01" placeholder="seat01"> <span
+							th:if="${#fields.hasErrors('seat01')}" th:errors="*{seat01}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb02" class="col-form-label">Seat2</label> <input
+							type="text" th:field="*{seat02}" class="form-control tfseat"
+							id="tb02" placeholder="seat02"> <span
+							th:if="${#fields.hasErrors('seat02')}" th:errors="*{seat02}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb03" class="col-form-label">Seat3</label> <input
+							type="text" th:field="*{seat03}" class="form-control tfseat"
+							id="tb03" placeholder="seat03"> <span
+							th:if="${#fields.hasErrors('seat03')}" th:errors="*{seat03}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb04" class="col-form-label">Seat4</label> <input
+							type="text" th:field="*{seat04}" class="form-control tfseat"
+							id="tb04" placeholder="seat04"> <span
+							th:if="${#fields.hasErrors('seat04')}" th:errors="*{seat04}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb05" class="col-form-label">Seat5</label> <input
+							type="text" th:field="*{seat05}" class="form-control tfseat"
+							id="tb05" placeholder="seat05"> <span
+							th:if="${#fields.hasErrors('seat05')}" th:errors="*{seat05}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb06" class="col-form-label">Seat6</label> <input
+							type="text" th:field="*{seat06}" class="form-control tfseat"
+							id="tb06" placeholder="seat06"> <span
+							th:if="${#fields.hasErrors('seat06')}" th:errors="*{seat06}"
+							class="text-danger"></span>
+					</div>
+
+					<div class="form-group col-md-8">
+						<label for="tb07" class="col-form-label">Seat7</label> <input
+							type="text" th:field="*{seat07}" class="form-control tfseat"
+							id="tb07" placeholder="seat07"> <span
+							th:if="${#fields.hasErrors('seat07')}" th:errors="*{seat07}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb08" class="col-form-label">Seat8</label> <input
+							type="text" th:field="*{seat08}" class="form-control tfseat"
+							id="tb08" placeholder="seat08"> <span
+							th:if="${#fields.hasErrors('seat08')}" th:errors="*{seat08}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb09" class="col-form-label">Seat9</label> <input
+							type="text" th:field="*{seat09}" class="form-control tfseat"
+							id="tb09" placeholder="seat09"> <span
+							th:if="${#fields.hasErrors('seat09')}" th:errors="*{seat09}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb10" class="col-form-label">Seat10</label> <input
+							type="text" th:field="*{seat10}" class="form-control tfseat"
+							id="tb10" placeholder="seat10"> <span
+							th:if="${#fields.hasErrors('seat10')}" th:errors="*{seat10}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb11" class="col-form-label">Seat11</label> <input
+							type="text" th:field="*{seat11}" class="form-control tfseat"
+							id="tb11" placeholder="seat11"> <span
+							th:if="${#fields.hasErrors('seat11')}" th:errors="*{seat11}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb12" class="col-form-label">Seat12</label> <input
+							type="text" th:field="*{seat12}" class="form-control tfseat"
+							id="tb12" placeholder="seat12"> <span
+							th:if="${#fields.hasErrors('seat12')}" th:errors="*{seat12}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb13" class="col-form-label">Seat13</label> <input
+							type="text" th:field="*{seat13}" class="form-control tfseat"
+							id="tb13" placeholder="seat13"> <span
+							th:if="${#fields.hasErrors('seat13')}" th:errors="*{seat13}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb14" class="col-form-label">Seat14</label> <input
+							type="text" th:field="*{seat14}" class="form-control tfseat"
+							id="tb14" placeholder="seat14"> <span
+							th:if="${#fields.hasErrors('seat14')}" th:errors="*{seat14}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb15" class="col-form-label">Seat15</label> <input
+							type="text" th:field="*{seat15}" class="form-control tfseat"
+							id="tb15" placeholder="seat15"> <span
+							th:if="${#fields.hasErrors('seat15')}" th:errors="*{seat15}"
+							class="text-danger"></span>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="tb16" class="col-form-label">Seat16</label> <input
+							type="text" th:field="*{seat16}" class="form-control tfseat"
+							id="tb16" placeholder="seat16"> <span
+							th:if="${#fields.hasErrors('seat16')}" th:errors="*{seat16}"
+							class="text-danger"></span>
+					</div>
+
+					<div class="col-md-6">
+						<input type="submit" class="btn btn-primary" value="Book Now">
+					</div>
+
+
+
+
+
+
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		//var x = document.getElementById("b1");
+		//x.style.width="60px";
+		//x.style.height="40px";
+		// x.style.border="2px solid black";
+		// x.style.border="2px solid #4f4f4f";
+		//x.style.borderRadius="5px";
+		//x.style.outline="none";
+		//var selectedSeatArray=new Array();
+		var selectedSeatArray = [];
+		var selectedSeatSet = new Set();
+		var totalSelectedSeats = 0;
+		var totalFare = 0;
+
+		var availableSeats = 0;
+		var bookedSeats = 0;
+
+		//document.getElementById("totalFare").value=totalFare;
+
+		function loadBooked() {
+			//text field and button mustbe euqual number to match
+			var x = document.getElementsByClassName("tfseat");
+			var t = document.getElementsByClassName("available");
+			
+			for (i = 0; i < x.length; i++) {
+				if (x[i].value == "booked") {
+					//t[i].className="";
+
+					t[i].classList.add("booked");
+					//t[i].name="booked";
+					t[i].disabled = true;
+					bookedSeats += 1;
+					//alert(i);
+					// document.getElementById("tbbookedSeats").value=bookedSeats;
+					// var tt=document.getElementById("tbtotalSeats").value;
+					// document.getElementById("tbavailableSeats").value= tt-bookedSeats;
+				} else {
+					t[i].classList.add("available");
+					availableSeats += 1;
+				}
+
+			}
+			document.getElementById("badge1").innerHTML = totalSelectedSeats;
+			document.getElementById("badge2").innerHTML = selectedSeatArray; 
+			document.getElementById("badge3").innerHTML = bookedSeats; 
+			document.getElementById("badge4").innerHTML = availableSeats; 
+			document.getElementById("badge5").innerHTML = totalFare; 
+			//document.getElementById("myDIV").innerHTML="B:"+bookedSeats+"<br>A::"+availableSeats;
+		}
+		var x;
+		function myFunction(e) {
+			//var x = e.target.id;
+			x = document.getElementById(e.target.id);
+			var uFare = Number(document.getElementById("unitFare").value);
+			//var bg = e.target;
+			//alert(e.target.id);
+			//change the state of element
+			if (e.target.name == 'available' && e.type == 'click') {
+				x.classList.remove('available');
+				x.classList.add('selected');
+				//x.style.backgroundColor = "rgb(5,130,29)";
+				//x.style.color = "rgb(255,255,255)";
+				//x.style.border = "2px solid #4f4f4f";
+				//x.style.borderRadius = "5px";
+				//x.style.outline = "none";
+				//x.style.width = "60px";
+				//x.style.height = "40px";
+				x.name = "select";
+				totalSelectedSeats += 1;
+				bookedSeats+=1;
+				availableSeats-=1;
+				totalFare += uFare;
+				selectedSeatSet.add(x.innerHTML);
+				document.getElementById("t"+x.id).value="booked";
+
+				//change the state of element
+			} else if (e.target.name == 'select' && e.type == 'click') {
+				//x.style.backgroundColor = "#e5e5e5";
+				x.classList.remove('selected');
+				x.classList.add('available');
+				//x.style.color = "#000";
+				//x.style.border = "2px solid #4f4f4f";
+				//x.style.border="2px solid black";
+				//x.style.borderRadius = "5px";
+				//x.style.outline = "none";
+				//x.style.width = "60px";
+				//x.style.height = "40px";
+				x.name = "available";
+				totalSelectedSeats -= 1;
+				bookedSeats-=1;
+				availableSeats+=1;
+				totalFare -= uFare;
+				selectedSeatSet.delete(x.innerHTML);
+				document.getElementById("t"+x.id).value="available";
+
+			}
+			selectedSeatArray = Array.from(selectedSeatSet);
+			//asscending sort
+			selectedSeatArray.sort(function(a, b) {
+				if (a < b) {
+					return -1;
+				}
+				if (b < a) {
+					return 1;
+				}
+				return 0;
+			});
+
+			//alert("hellp");
+			document.getElementById("totalFare").value=totalFare;
+			document.getElementById("bookedSeats").value=bookedSeats;
+			var totalSeats=bookedSeats+availableSeats;
+			document.getElementById("totalSeats").value=totalSeats;
+			document.getElementById("availableSeats").value= availableSeats;
+			
+// 			document.getElementById("myDIV").innerHTML = "totalSelectedSeats:"+ totalSelectedSeats + 
+// 			"<br/>SelectedSeats:"+ selectedSeatArray +
+// 			"<br/>bookedSeats:"+ bookedSeats +
+// 			"<br/>availableSeats:"+ availableSeats +
+// 			"<br/>totalFare:"+ totalFare ;
+
+
+
+			document.getElementById("badge1").innerHTML = totalSelectedSeats;
+			document.getElementById("badge2").innerHTML = selectedSeatArray; 
+			document.getElementById("badge3").innerHTML = bookedSeats; 
+			document.getElementById("badge4").innerHTML = availableSeats; 
+			document.getElementById("badge5").innerHTML = totalFare; 
+			
+		}
+	</script>
+</body>
+</html>
